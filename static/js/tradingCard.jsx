@@ -56,12 +56,13 @@ function TradingCardContainer() {
   const [cards, setCards] = React.useState([]);
 
   React.useEffect(() => {
-    fetch('/cards.json')
-      .then((res) => res.json())
-      .then((cardArr) => {
-        setCards(cardArr.cards)
-    });
-  }, [])
+    (async () => {
+      const res = await fetch('/cards.json');
+      const cardArr = await res.json();
+      setCards(cardArr.cards)
+    })();
+  }, []);
+
 
   const tradingCards = [];
 
@@ -77,7 +78,12 @@ function TradingCardContainer() {
   }
 
   function addCard(newCard) {
-    setCards([...cards, newCard]);
+    // setCards([...cards, newCard]);
+    (async () => {
+      const res = await fetch('/cards.json');
+      const cardArr = await res.json();
+      setCards(cardArr.cards)
+    })();
   }
 
   return (
